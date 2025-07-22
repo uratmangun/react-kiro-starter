@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This feature involves creating a modern full-stack web application using Vite as the build tool, React for the frontend framework, Supabase for backend services (database, authentication, real-time features), and shadcn/ui for the component library. The project will provide a solid foundation for building scalable web applications with modern tooling and best practices.
+This feature involves creating a modern full-stack web application using Vite as the build tool, React for the frontend framework, Supabase for backend services (database, real-time features), and shadcn/ui for the component library. The project will provide a solid foundation for building scalable web applications with modern tooling and best practices.
 
 ## Requirements
 
@@ -19,14 +19,13 @@ This feature involves creating a modern full-stack web application using Vite as
 
 ### Requirement 2
 
-**User Story:** As a developer, I want Supabase integration configured, so that I can use database, authentication, and real-time features in my application.
+**User Story:** As a developer, I want Supabase integration configured, so that I can use database and real-time features in my application.
 
 #### Acceptance Criteria
 
 1. WHEN Supabase client is initialized THEN the system SHALL connect to the Supabase project using environment variables
-2. WHEN authentication is implemented THEN the system SHALL support user signup, login, and logout functionality
-3. WHEN database operations are performed THEN the system SHALL provide type-safe database queries and mutations
-4. WHEN real-time subscriptions are set up THEN the system SHALL handle live data updates from the database
+2. WHEN database operations are performed THEN the system SHALL provide type-safe database queries and mutations
+3. WHEN real-time subscriptions are set up THEN the system SHALL handle live data updates from the database
 
 ### Requirement 3
 
@@ -56,10 +55,9 @@ This feature involves creating a modern full-stack web application using Vite as
 
 #### Acceptance Criteria
 
-1. WHEN React Router is configured THEN the system SHALL support client-side routing with protected routes
+1. WHEN React Router is configured THEN the system SHALL support client-side routing
 2. WHEN state management is implemented THEN the system SHALL handle global application state efficiently
 3. WHEN navigation occurs THEN the system SHALL maintain proper URL structure and browser history
-4. WHEN authentication state changes THEN the system SHALL redirect users appropriately
 
 ### Requirement 6
 

@@ -1,34 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Suspense, lazy } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Layout from '@/components/layout/Layout'
+import LoadingSpinner from '@/components/common/LoadingSpinner'
+import RouteErrorBoundary from '@/components/common/RouteErrorBoundary'
+import GlobalErrorBoundary from '@/components/common/GlobalErrorBoundary'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { Toaster } from '@/components/ui/toaster'
+
+// Lazy load pages for code splitting
+const HomePage = lazy(() => import('@/pages/HomePage'))
+const AboutPage = lazy(() => import('@/pages/AboutPage'))
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href='https://vite.dev' target='_blank' rel='noreferrer'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank' rel='noreferrer'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <GlobalErrorBoundary>
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route
+                index
+                element={
+                  <RouteErrorBoundary>
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <HomePage />
+                    </Suspense>
+                  </RouteErrorBoundary>
+                }
+              />
+              <Route
+                path="about"
+                element={
+                  <RouteErrorBoundary>
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <AboutPage />
+                    </Suspense>
+                  </RouteErrorBoundary>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <RouteErrorBoundary>
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <NotFoundPage />
+                    </Suspense>
+                  </RouteErrorBoundary>
+                }
+              />
+            </Route>
+          </Routes>
+          <Toaster />
+        </BrowserRouter>
+      </ThemeProvider>
+    </GlobalErrorBoundary>
   )
 }
 

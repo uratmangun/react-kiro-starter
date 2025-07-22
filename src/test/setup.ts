@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 
 // Mock IntersectionObserver
-Object.defineProperty(global, 'IntersectionObserver', {
+Object.defineProperty(globalThis, 'IntersectionObserver', {
   writable: true,
   value: class IntersectionObserver {
     constructor() {}
@@ -12,7 +12,7 @@ Object.defineProperty(global, 'IntersectionObserver', {
 })
 
 // Mock ResizeObserver
-Object.defineProperty(global, 'ResizeObserver', {
+Object.defineProperty(globalThis, 'ResizeObserver', {
   writable: true,
   value: class ResizeObserver {
     constructor() {}

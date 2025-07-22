@@ -2,12 +2,12 @@
 
 ## Overview
 
-This design outlines the architecture for a modern full-stack web application built with Vite, React, Supabase, and shadcn/ui. The application will serve as a robust foundation for scalable web applications, featuring fast development experience, type-safe database operations, modern authentication flows, and a consistent design system.
+This design outlines the architecture for a modern full-stack web application built with Vite, React, Supabase, and shadcn/ui. The application will serve as a robust foundation for scalable web applications, featuring fast development experience, type-safe database operations, real-time functionality, and a consistent design system.
 
 The stack combines:
 - **Vite**: Next-generation build tool providing fast HMR and optimized production builds
 - **React 18+**: Modern React with hooks, concurrent features, and TypeScript support
-- **Supabase**: Open-source Firebase alternative providing PostgreSQL database, authentication, real-time subscriptions, and storage
+- **Supabase**: Open-source Firebase alternative providing PostgreSQL database and real-time subscriptions
 - **shadcn/ui**: Accessible, customizable component library built on Radix UI and Tailwind CSS
 
 ## Architecture
@@ -24,15 +24,11 @@ graph TB
     
     subgraph "Backend (Supabase)"
         E[PostgreSQL Database]
-        F[Authentication Service]
         G[Real-time Engine]
-        H[Storage Service]
     end
     
     C --> E
-    C --> F
     C --> G
-    C --> H
     
     subgraph "Development Tools"
         I[TypeScript]
@@ -51,7 +47,6 @@ graph TB
 src/
 ├── components/          # Reusable UI components
 │   ├── ui/             # shadcn/ui components
-│   ├── auth/           # Authentication components
 │   ├── layout/         # Layout components
 │   └── common/         # Common components
 ├── pages/              # Page components
@@ -69,20 +64,13 @@ src/
 
 ### Core Components
 
-#### 1. Authentication System
-- **AuthProvider**: Context provider for authentication state
-- **LoginForm**: Email/password and OAuth login
-- **SignUpForm**: User registration with email verification
-- **ProtectedRoute**: Route wrapper for authenticated pages
-- **UserProfile**: User profile management
-
-#### 2. Layout Components
+#### 1. Layout Components
 - **AppLayout**: Main application layout with navigation
 - **Header**: Application header with user menu
 - **Sidebar**: Navigation sidebar (if applicable)
 - **Footer**: Application footer
 
-#### 3. UI Components (shadcn/ui)
+#### 2. UI Components (shadcn/ui)
 - **Button**: Various button variants and sizes
 - **Input**: Form input fields with validation
 - **Card**: Content containers
@@ -97,26 +85,6 @@ src/
 interface SupabaseConfig {
   url: string
   anonKey: string
-  options?: {
-    auth: {
-      autoRefreshToken: boolean
-      persistSession: boolean
-      detectSessionInUrl: boolean
-    }
-  }
-}
-```
-
-#### Authentication Context
-```typescript
-interface AuthContextType {
-  user: User | null
-  session: Session | null
-  loading: boolean
-  signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string) => Promise<void>
-  signOut: () => Promise<void>
-  signInWithOAuth: (provider: Provider) => Promise<void>
 }
 ```
 
@@ -125,27 +93,7 @@ interface AuthContextType {
 interface Database {
   public: {
     Tables: {
-      profiles: {
-        Row: {
-          id: string
-          email: string
-          full_name: string | null
-          avatar_url: string | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id: string
-          email: string
-          full_name?: string | null
-          avatar_url?: string | null
-        }
-        Update: {
-          full_name?: string | null
-          avatar_url?: string | null
-          updated_at?: string
-        }
-      }
+      // Database tables will be defined based on application needs
     }
   }
 }
@@ -153,26 +101,9 @@ interface Database {
 
 ## Data Models
 
-### User Profile Model
-```typescript
-interface UserProfile {
-  id: string
-  email: string
-  full_name: string | null
-  avatar_url: string | null
-  created_at: string
-  updated_at: string
-}
-```
-
 ### Application State
 ```typescript
 interface AppState {
-  auth: {
-    user: User | null
-    session: Session | null
-    loading: boolean
-  }
   ui: {
     theme: 'light' | 'dark' | 'system'
     sidebarOpen: boolean
@@ -194,11 +125,6 @@ interface AppError {
   message: string
   details?: any
   timestamp: Date
-}
-
-interface AuthError extends AppError {
-  type: 'auth'
-  authCode: 'invalid_credentials' | 'email_not_confirmed' | 'user_not_found'
 }
 
 interface DatabaseError extends AppError {
@@ -225,7 +151,6 @@ interface DatabaseError extends AppError {
 - **Validation testing**: Zod schemas and form validation
 
 #### Integration Tests (20%)
-- **Authentication flow**: Login, signup, logout processes
 - **Database operations**: CRUD operations with Supabase
 - **Form submissions**: End-to-end form workflows
 - **Route navigation**: React Router integration
@@ -255,12 +180,6 @@ export default defineConfig({
 ```
 
 ## Security Considerations
-
-### Authentication Security
-- **Row Level Security (RLS)**: Database-level access control
-- **JWT token management**: Secure token storage and refresh
-- **OAuth integration**: Secure third-party authentication
-- **Session management**: Automatic session refresh and cleanup
 
 ### Data Protection
 - **Input validation**: Client and server-side validation
