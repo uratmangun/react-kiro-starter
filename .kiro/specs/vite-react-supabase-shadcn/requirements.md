@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This feature involves creating a modern full-stack web application using Vite as the build tool, React for the frontend framework, Supabase for backend services (database, real-time features), and shadcn/ui for the component library. The project will provide a solid foundation for building scalable web applications with modern tooling and best practices.
+This feature involves creating a modern full-stack web application using Vite as the build tool, React for the frontend framework, Supabase for backend services (database), and shadcn/ui for the component library. The project will provide a solid foundation for building scalable web applications with modern tooling and best practices.
 
 ## Requirements
 
@@ -19,13 +19,12 @@ This feature involves creating a modern full-stack web application using Vite as
 
 ### Requirement 2
 
-**User Story:** As a developer, I want Supabase integration configured, so that I can use database and real-time features in my application.
+**User Story:** As a developer, I want Supabase integration configured, so that I can use database features in my application.
 
 #### Acceptance Criteria
 
 1. WHEN Supabase client is initialized THEN the system SHALL connect to the Supabase project using environment variables
 2. WHEN database operations are performed THEN the system SHALL provide type-safe database queries and mutations
-3. WHEN real-time subscriptions are set up THEN the system SHALL handle live data updates from the database
 
 ### Requirement 3
 

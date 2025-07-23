@@ -6,6 +6,8 @@ import RouteErrorBoundary from '@/components/common/RouteErrorBoundary'
 import GlobalErrorBoundary from '@/components/common/GlobalErrorBoundary'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { Toaster } from '@/components/ui/toaster'
+import { StagewiseToolbar } from '@stagewise/toolbar-react'
+import ReactPlugin from '@stagewise-plugins/react'
 
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import('@/pages/HomePage'))
@@ -53,6 +55,7 @@ function App() {
           </Routes>
           <Toaster />
         </BrowserRouter>
+        <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
       </ThemeProvider>
     </GlobalErrorBoundary>
   )

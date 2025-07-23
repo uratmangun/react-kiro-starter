@@ -1,83 +1,11 @@
 import { Button } from '@/components/ui/button'
-import { useToast } from '@/hooks/use-toast'
-import { useErrorHandler } from '@/hooks/use-error-handler'
-import AsyncErrorBoundary from '@/components/common/AsyncErrorBoundary'
-import { useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { CopyButton } from '@/components/ui/copy-button'
+import { ExternalLink, Github } from 'lucide-react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 
 export default function HomePage() {
-  const [count, setCount] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
-  const { handleAsyncError, showSuccessToast, showErrorToast } = useErrorHandler()
-
-  const handleCountClick = () => {
-    setCount(count => count + 1)
-    toast({
-      title: "Counter Updated!",
-      description: `Count is now ${count + 1}`,
-    })
-  }
-
-  const simulateAsyncError = async () => {
-    setIsLoading(true)
-    
-    const result = await handleAsyncError(async () => {
-      // Simulate a network delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Simulate an error
-      throw new Error('Simulated async operation failed')
-    }, 'HomePage.simulateAsyncError')
-    
-    setIsLoading(false)
-    
-    if (result) {
-      showSuccessToast('Operation completed successfully!')
-    }
-  }
-
-  const simulateSupabaseError = async () => {
-    setIsLoading(true)
-    
-    const result = await handleAsyncError(async () => {
-      // This will fail because we don't have a 'test_table' table
-      const { data, error } = await supabase
-        .from('profiles' as any)
-        .select('*')
-        .limit(1)
-      
-      if (error) throw error
-      return data
-    }, 'HomePage.simulateSupabaseError')
-    
-    setIsLoading(false)
-    
-    if (result) {
-      showSuccessToast('Supabase query completed successfully!')
-    }
-  }
-
-  const simulateNetworkError = async () => {
-    setIsLoading(true)
-    
-    const result = await handleAsyncError(async () => {
-      // Simulate a network request that fails
-      const response = await fetch('https://nonexistent-api.example.com/data')
-      if (!response.ok) {
-        throw new Error(`Network error: ${response.status}`)
-      }
-      return response.json()
-    }, 'HomePage.simulateNetworkError')
-    
-    setIsLoading(false)
-    
-    if (result) {
-      showSuccessToast('Network request completed successfully!')
-    }
-  }
+  const githubCommand = 'gh repo create my-awesome-project --template uratmangun/react-kiro-starter --public'
 
   return (
     <div className="space-y-8">
@@ -108,54 +36,42 @@ export default function HomePage() {
         </p>
       </div>
 
-      <div className="flex flex-col items-center gap-4">
-        <Button onClick={handleCountClick} size="lg">
-          count is {count}
-        </Button>
-
-        <div className="flex flex-wrap gap-2 justify-center">
-          <Button onClick={() => showSuccessToast('This is a success message!')} variant="outline" size="sm">
-            Show Success Toast
-          </Button>
-          <Button onClick={() => showErrorToast('This is an error message!')} variant="outline" size="sm">
-            Show Error Toast
-          </Button>
+      <div className="flex flex-col items-center gap-6">
+        <div className="space-y-4 text-center">
+          <h3 className="text-xl font-semibold flex items-center justify-center gap-2">
+            <Github className="h-5 w-5" />
+            Use This Template
+          </h3>
+          <p className="text-muted-foreground text-sm max-w-md mx-auto">
+            Get started quickly by creating a new repository from this template using GitHub CLI
+          </p>
         </div>
 
-        <AsyncErrorBoundary>
-          <div className="space-y-3">
-            <h3 className="text-lg font-semibold">Error Handling Demo</h3>
-            <div className="flex flex-wrap gap-2 justify-center">
-              <Button 
-                onClick={simulateAsyncError} 
-                variant="destructive" 
-                size="sm"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Loading...' : 'Simulate Async Error'}
-              </Button>
-              <Button 
-                onClick={simulateSupabaseError} 
-                variant="destructive" 
-                size="sm"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Loading...' : 'Simulate DB Error'}
-              </Button>
-              <Button 
-                onClick={simulateNetworkError} 
-                variant="destructive" 
-                size="sm"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Loading...' : 'Simulate Network Error'}
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground text-center max-w-md mx-auto">
-              These buttons demonstrate error handling with toast notifications and logging
-            </p>
+        <div className="w-full max-w-2xl space-y-3">
+          <div className="flex items-center gap-2 p-3 bg-muted rounded-lg font-mono text-sm">
+            <code className="flex-1 text-left">{githubCommand}</code>
+            <CopyButton text={githubCommand} />
           </div>
-        </AsyncErrorBoundary>
+          
+          <div className="flex flex-wrap gap-2 justify-center">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => window.open('https://github.com/uratmangun/react-kiro-starter', '_blank')}
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              View on GitHub
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => window.open('https://github.com/uratmangun/react-kiro-starter/generate', '_blank')}
+            >
+              <Github className="h-4 w-4 mr-2" />
+              Use Template
+            </Button>
+          </div>
+        </div>
 
         <p className="text-muted-foreground text-center text-xs sm:text-sm max-w-md">
           Edit{' '}
