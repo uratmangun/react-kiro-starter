@@ -1,6 +1,6 @@
 {
   "enabled": true,
-  "name": "CREATE COMMIT AND PUSH GIT",
+  "name": "GIT PUSH AUTO",
   "description": "Automatically stages changes, generates a conventional commit message with appropriate emoji, and pushes to remote",
   "version": "1",
   "when": {
