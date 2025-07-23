@@ -5,7 +5,7 @@ import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 
 export default function HomePage() {
-  const githubCommand = 'gh repo create my-awesome-project --template uratmangun/react-kiro-starter --public'
+  const githubCommand = 'gh repo create my-awesome-project --template uratmangun/react-kiro-starter --public --clone'
 
   return (
     <div className="space-y-8">
