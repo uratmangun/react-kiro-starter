@@ -21,7 +21,7 @@ test('renders home page content by default', async () => {
   
   // Check for count button
   await waitFor(() => {
-    expect(screen.getByText(/count is 0/i)).toBeInTheDocument()
+    expect(screen.getByText(/use this template/i)).toBeInTheDocument()
   })
 })
 

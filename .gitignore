@@ -127,7 +127,7 @@ Thumbs.db
 __tests__/
 *.test.js
 *.test.ts
-*.test.tsx
+#*.test.tsx # AI ased to read to fix 'count' test.
 *.spec.js
 *.spec.ts
 *.spec.tsx
