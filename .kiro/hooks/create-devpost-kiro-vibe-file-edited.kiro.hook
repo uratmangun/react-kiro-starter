@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "CREATE DEVPOST KIRO VIBE FILE EDITED",
+  "description": "Creates response about Kiro conversations when files are edited in src directory",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*",
+      ".kiro/specs/**/*",
+      "functions/**/*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Create a response about structuring conversations with Kiro for building projects and save it to PITCH/VIBE.txt. Focus on effective workflow patterns, impressive code generation examples, and tips for AI-assisted development. Keep the answer to 500 characters maximum. Use plain text only, no markdown formatting."
+  }
+}

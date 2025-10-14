@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "CREATE DEVPOST KIRO HOOKS",
+  "description": "Analyzes all files in the .kiro/hooks directory and creates a summary of automated workflows",
+  "version": "1",
+  "when": {
+    "type": "userTriggered",
+    "patterns": [
+      "src/**/*",
+      ".kiro/specs/**/*",
+      "functions/**/*",
+      ".kiro/hooks/**/*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Please analyze all files in the .kiro/hooks directory. Create or update a file named PITCH/HOOKS.txt that answers: \"For agent hooks: What specific workflows did you automate with Kiro hooks? How did these hooks improve your development process?\" Keep the answer to 500 characters maximum. Use plain text only, no markdown formatting."
+  }
+}
